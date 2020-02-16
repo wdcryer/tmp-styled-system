@@ -1,6 +1,7 @@
 {
   "name": "tmp-styled-system",
   "main": "build/styled-system.js",
+  "module": "src/styled-system.js",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -30,6 +31,10 @@
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/memoize": "^0.7.4",
     "prop-types": "^15.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregolai/tmp-styled-system.git"
   },
   "publishConfig": {
     "access": "public"
