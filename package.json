@@ -1,0 +1,33 @@
+{
+  "name": "tmp-styled-system",
+  "main": "src/styled-system.js",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "jest-emotion": "^10.0.27",
+    "jest-styled-components": "^7.0.0",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "styled-components": "^5.0.1",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "^0.8.6",
+    "@emotion/memoize": "^0.7.4",
+    "prop-types": "^15.7.2"
+  }
+}
