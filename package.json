@@ -1,22 +1,31 @@
 {
   "name": "tmp-styled-system",
-  "main": "build/styled-system.js",
-  "module": "src/styled-system.js",
+  "main": "dist/cjs/styled-system.js",
+  "module": "dist/esm/styled-system.js",
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:cjs": "NODE_ENV=cjs babel src -d dist/cjs --root-mode upward",
+    "build:esm": "NODE_ENV=esm babel src -d dist/esm --root-mode upward",
+    "clean": "npm run clean:cjs && npm run clean:esm && rm -rf dist",
+    "clean:cjs": "rm -rf dist/cjs",
+    "clean:esm": "rm -rf dist/esm",
+    "prettier": "prettier \"./src/**/*.js\" --write",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
+    "@babel/register": "^7.8.3",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
-    "babel-cli": "^6.26.0",
     "babel-jest": "^25.1.0",
     "jest": "^25.1.0",
     "jest-emotion": "^10.0.27",
@@ -32,11 +41,19 @@
     "@emotion/memoize": "^0.7.4",
     "prop-types": "^15.7.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gregolai/tmp-styled-system.git"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

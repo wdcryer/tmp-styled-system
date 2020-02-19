@@ -13,7 +13,7 @@ import {
   buttonStyle,
   textStyle,
   colorStyle
-} from './styled-system'
+} from './styled-system';
 
 const all = compose(
   space,
@@ -29,24 +29,24 @@ const all = compose(
   buttonStyle,
   textStyle,
   colorStyle
-)
+);
 
-const regex = new RegExp(`^(${all.propNames.join('|')})$`)
+const regex = new RegExp(`^(${all.propNames.join('|')})$`);
 
 export const omit = props => {
-  const next = {}
+  const next = {};
   for (let key in props) {
-    if (regex.test(key)) continue
-    next[key] = props[key]
+    if (regex.test(key)) continue;
+    next[key] = props[key];
   }
-  return next
-}
+  return next;
+};
 
 export const pick = props => {
-  const next = {}
+  const next = {};
   for (let key in props) {
-    if (!regex.test(key)) continue
-    next[key] = props[key]
+    if (!regex.test(key)) continue;
+    next[key] = props[key];
   }
-  return next
-}
+  return next;
+};

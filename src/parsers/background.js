@@ -1,4 +1,4 @@
-import { system } from '../core'
+import { system } from '../core';
 
 const backgroundImage = true;
 const backgroundSize = true;
@@ -15,7 +15,7 @@ export const background = system({
   bgImage: backgroundImage,
   bgSize: backgroundSize,
   bgPosition: backgroundPosition,
-  bgRepeat: backgroundRepeat,
-})
+  bgRepeat: backgroundRepeat
+});
 
-export default background
+export default background;

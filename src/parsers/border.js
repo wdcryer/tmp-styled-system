@@ -1,130 +1,130 @@
-import { system } from '../core'
+import { system } from '../core';
 
 export const border = system({
   border: {
     property: 'border',
-    scale: 'borders',
+    scale: 'borders'
   },
   borderWidth: {
     property: 'borderWidth',
-    scale: 'borderWidths',
+    scale: 'borderWidths'
   },
   borderStyle: {
     property: 'borderStyle',
-    scale: 'borderStyles',
+    scale: 'borderStyles'
   },
   borderColor: {
     property: 'borderColor',
-    scale: 'colors',
+    scale: 'colors'
   },
   borderRadius: {
     property: 'borderRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderTop: {
     property: 'borderTop',
-    scale: 'borders',
+    scale: 'borders'
   },
   borderTopLeftRadius: {
     property: 'borderTopLeftRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderTopRightRadius: {
     property: 'borderTopRightRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderRight: {
     property: 'borderRight',
-    scale: 'borders',
+    scale: 'borders'
   },
   borderBottom: {
     property: 'borderBottom',
-    scale: 'borders',
+    scale: 'borders'
   },
   borderBottomLeftRadius: {
     property: 'borderBottomLeftRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderBottomRightRadius: {
     property: 'borderBottomRightRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderLeft: {
     property: 'borderLeft',
-    scale: 'borders',
+    scale: 'borders'
   },
   borderX: {
     properties: ['borderLeft', 'borderRight'],
-    scale: 'borders',
+    scale: 'borders'
   },
   borderY: {
     properties: ['borderTop', 'borderBottom'],
-    scale: 'borders',
+    scale: 'borders'
   },
   borderTopWidth: {
     property: 'borderTopWidth',
-    scale: 'borderWidths',
+    scale: 'borderWidths'
   },
   borderTopColor: {
     property: 'borderTopColor',
-    scale: 'colors',
+    scale: 'colors'
   },
   borderTopStyle: {
     property: 'borderTopStyle',
-    scale: 'borderStyles',
+    scale: 'borderStyles'
   },
   borderTopLeftRadius: {
     property: 'borderTopLeftRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderTopRightRadius: {
     property: 'borderTopRightRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderBottomWidth: {
     property: 'borderBottomWidth',
-    scale: 'borderWidths',
+    scale: 'borderWidths'
   },
   borderBottomColor: {
     property: 'borderBottomColor',
-    scale: 'colors',
+    scale: 'colors'
   },
   borderBottomStyle: {
     property: 'borderBottomStyle',
-    scale: 'borderStyles',
+    scale: 'borderStyles'
   },
   borderBottomLeftRadius: {
     property: 'borderBottomLeftRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderBottomRightRadius: {
     property: 'borderBottomRightRadius',
-    scale: 'radii',
+    scale: 'radii'
   },
   borderLeftWidth: {
     property: 'borderLeftWidth',
-    scale: 'borderWidths',
+    scale: 'borderWidths'
   },
   borderLeftColor: {
     property: 'borderLeftColor',
-    scale: 'colors',
+    scale: 'colors'
   },
   borderLeftStyle: {
     property: 'borderLeftStyle',
-    scale: 'borderStyles',
+    scale: 'borderStyles'
   },
   borderRightWidth: {
     property: 'borderRightWidth',
-    scale: 'borderWidths',
+    scale: 'borderWidths'
   },
   borderRightColor: {
     property: 'borderRightColor',
-    scale: 'colors',
+    scale: 'colors'
   },
   borderRightStyle: {
     property: 'borderRightStyle',
-    scale: 'borderStyles',
-  },
-})
+    scale: 'borderStyles'
+  }
+});
 
-export default border
+export default border;

@@ -1,5 +1,5 @@
-import { get } from './core'
+import { get } from './core';
 
 export const themeGet = (path, fallback = null) => props =>
-  get(props.theme, path, fallback)
-export default themeGet
+  get(props.theme, path, fallback);
+export default themeGet;

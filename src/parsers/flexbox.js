@@ -1,4 +1,4 @@
-import { system } from '../core'
+import { system } from '../core';
 
 export const flexbox = system({
   alignItems: true,
@@ -14,7 +14,7 @@ export const flexbox = system({
   flexBasis: true,
   justifySelf: true,
   alignSelf: true,
-  order: true,
-})
+  order: true
+});
 
-export default flexbox
+export default flexbox;

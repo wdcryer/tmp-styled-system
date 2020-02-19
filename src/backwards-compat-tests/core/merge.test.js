@@ -1,26 +1,26 @@
-import { merge } from '../../core'
+import { merge } from '../../core';
 
 test('deeply merges', () => {
   const result = merge(
     {
       hello: 'hi',
       media: {
-        howdy: 'ho',
-      },
+        howdy: 'ho'
+      }
     },
     {
       beep: 'boop',
       media: {
-        bleep: 'bloop',
-      },
+        bleep: 'bloop'
+      }
     }
-  )
+  );
   expect(result).toEqual({
     hello: 'hi',
     beep: 'boop',
     media: {
       howdy: 'ho',
-      bleep: 'bloop',
-    },
-  })
-})
+      bleep: 'bloop'
+    }
+  });
+});

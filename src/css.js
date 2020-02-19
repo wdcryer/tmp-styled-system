@@ -1,18 +1,18 @@
 // based on https://github.com/developit/dlv
 export const get = (obj, key, def, p, undef) => {
-  key = key && key.split ? key.split('.') : [key]
+  key = key && key.split ? key.split('.') : [key];
   for (p = 0; p < key.length; p++) {
-    obj = obj ? obj[key[p]] : undef
+    obj = obj ? obj[key[p]] : undef;
   }
-  return obj === undef ? def : obj
-}
+  return obj === undef ? def : obj;
+};
 
-const defaultBreakpoints = [40, 52, 64].map(n => n + 'em')
+const defaultBreakpoints = [40, 52, 64].map(n => n + 'em');
 
 const defaultTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
-  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
-}
+  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72]
+};
 
 const aliases = {
   bg: 'backgroundColor',
@@ -29,16 +29,16 @@ const aliases = {
   pb: 'paddingBottom',
   pl: 'paddingLeft',
   px: 'paddingX',
-  py: 'paddingY',
-}
+  py: 'paddingY'
+};
 
 const multiples = {
   marginX: ['marginLeft', 'marginRight'],
   marginY: ['marginTop', 'marginBottom'],
   paddingX: ['paddingLeft', 'paddingRight'],
   paddingY: ['paddingTop', 'paddingBottom'],
-  size: ['width', 'height'],
-}
+  size: ['width', 'height']
+};
 
 const scales = {
   color: 'colors',
@@ -111,18 +111,18 @@ const scales = {
   size: 'sizes',
   // svg
   fill: 'colors',
-  stroke: 'colors',
-}
+  stroke: 'colors'
+};
 
 const positiveOrNegative = (scale, value) => {
   if (typeof value !== 'number' || value >= 0) {
-    return get(scale, value, value)
+    return get(scale, value, value);
   }
-  const absolute = Math.abs(value)
-  const n = get(scale, absolute, absolute)
-  if (typeof n === 'string') return '-' + n
-  return n * -1
-}
+  const absolute = Math.abs(value);
+  const n = get(scale, absolute, absolute);
+  if (typeof n === 'string') return '-' + n;
+  return n * -1;
+};
 
 const transforms = [
   'margin',
@@ -135,25 +135,22 @@ const transforms = [
   'top',
   'bottom',
   'left',
-  'right',
-].reduce(
-  (acc, curr) => {
-    acc[curr] = positiveOrNegative;
-    return acc;
-  },
-  {}
-)
+  'right'
+].reduce((acc, curr) => {
+  acc[curr] = positiveOrNegative;
+  return acc;
+}, {});
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
 const stringStartsWith = (str, search) =>
-  str.substring(0, search.length) === search
+  str.substring(0, search.length) === search;
 
 const createMediaQuery = n => {
   if (typeof n === 'string' && stringStartsWith(n, '@media ')) {
-    return n
+    return n;
   }
-  return `@media screen and (min-width: ${n})`
-}
+  return `@media screen and (min-width: ${n})`;
+};
 
 /**
  * Convert breakpoints into an array of media queries
@@ -171,112 +168,112 @@ const createMediaQueries = breakpoints => {
    */
   breakpoints = !Array.isArray(breakpoints)
     ? Object.values(breakpoints)
-    : breakpoints
+    : breakpoints;
 
-  const mediaQueries = Array(breakpoints.length + 1)
-  mediaQueries[0] = null
+  const mediaQueries = Array(breakpoints.length + 1);
+  mediaQueries[0] = null;
 
   for (let i = 1, ii = mediaQueries.length; i < ii; ++i) {
-    mediaQueries[i] = createMediaQuery(breakpoints[i - 1])
+    mediaQueries[i] = createMediaQuery(breakpoints[i - 1]);
   }
-  return mediaQueries
-}
+  return mediaQueries;
+};
 
 export const responsive = styles => theme => {
-  const next = {}
-  const breakpoints = get(theme, 'breakpoints', defaultBreakpoints)
-  const mediaQueries = createMediaQueries(breakpoints)
+  const next = {};
+  const breakpoints = get(theme, 'breakpoints', defaultBreakpoints);
+  const mediaQueries = createMediaQueries(breakpoints);
 
   for (const key in styles) {
     const value =
-      typeof styles[key] === 'function' ? styles[key](theme) : styles[key]
+      typeof styles[key] === 'function' ? styles[key](theme) : styles[key];
 
-    if (value == null) continue
+    if (value == null) continue;
     if (!Array.isArray(value)) {
-      next[key] = value
+      next[key] = value;
 
       if (typeof breakpoints === 'object' && typeof value === 'object') {
         // It's possible this object is simply a nested selector,
         // such as `h1: {...}`, and not a breakpoint object
-        let isBreakpointObj = false
+        let isBreakpointObj = false;
 
         for (let bpkey in value) {
-          let media = breakpoints[bpkey]
+          let media = breakpoints[bpkey];
 
           // Check if key is a breakpoint key
           if (!media) {
-            continue
+            continue;
           }
-          isBreakpointObj = true
+          isBreakpointObj = true;
 
           // Apply the breakpoint value to the result['@media...'] object
-          next[media] = next[media] || {}
-          next[media][key] = value[bpkey]
+          next[media] = next[media] || {};
+          next[media][key] = value[bpkey];
         }
 
         if (isBreakpointObj) {
           // Replace the result object with the default value (can be undefined)
-          next[key] = next[key]._
+          next[key] = next[key]._;
         }
       }
-      continue
+      continue;
     }
 
-    const length = value.slice(0, mediaQueries.length).length
+    const length = value.slice(0, mediaQueries.length).length;
     for (let i = 0; i < length; i++) {
-      const media = mediaQueries[i]
-      if (value[i] == null) continue
+      const media = mediaQueries[i];
+      if (value[i] == null) continue;
       if (!media) {
-        next[key] = value[i]
-        continue
+        next[key] = value[i];
+        continue;
       }
-      next[media] = next[media] || {}
-      next[media][key] = value[i]
+      next[media] = next[media] || {};
+      next[media][key] = value[i];
     }
   }
 
-  return next
-}
+  return next;
+};
 
 export const css = args => (props = {}) => {
-  const theme = { ...defaultTheme, ...(props.theme || props) }
-  let result = {}
-  const obj = typeof args === 'function' ? args(theme) : args
-  const styles = responsive(obj)(theme)
+  const theme = { ...defaultTheme, ...(props.theme || props) };
+  let result = {};
+  const obj = typeof args === 'function' ? args(theme) : args;
+  const styles = responsive(obj)(theme);
 
   for (const key in styles) {
-    const x = styles[key]
-    const val = typeof x === 'function' ? x(theme) : x
+    const x = styles[key];
+    const val = typeof x === 'function' ? x(theme) : x;
 
     if (key === 'variant') {
-      const variant = css(get(theme, val))(theme)
-      result = { ...result, ...variant }
-      continue
+      const variant = css(get(theme, val))(theme);
+      result = { ...result, ...variant };
+      continue;
     }
 
     if (val && typeof val === 'object') {
-      result[key] = css(val)(theme)
-      continue
+      result[key] = css(val)(theme);
+      continue;
     }
 
-    const prop = get(aliases, key, key)
-    const scaleName = get(scales, prop)
-    const scale = get(theme, scaleName, get(theme, prop, {}))
-    const transform = get(transforms, prop, get)
-    const value = transform(scale, val, val)
+    const prop = get(aliases, key, key);
+    const scaleName = get(scales, prop);
+    const scale = get(theme, scaleName, get(theme, prop, {}));
+    const transform = get(transforms, prop, get);
+    const value = transform(scale, val, val);
 
     if (multiples[prop]) {
-      const dirs = multiples[prop]
+      const dirs = multiples[prop];
 
       for (let i = 0; i < dirs.length; i++) {
-        result[dirs[i]] = value
+        result[dirs[i]] = value;
       }
     } else {
-      result[prop] = value
+      result[prop] = value;
     }
   }
 
-  return result
-}
+  return result;
+};
 
-export default css
+export default css;

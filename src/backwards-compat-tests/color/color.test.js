@@ -1,12 +1,12 @@
-import color from '../../parsers/color'
+import color from '../../parsers/color';
 
 test('returns colors styles', () => {
   const style = color({
     color: 'gold',
-    bg: 'tomato',
-  })
+    bg: 'tomato'
+  });
   expect(style).toEqual({
     color: 'gold',
-    backgroundColor: 'tomato',
-  })
-})
+    backgroundColor: 'tomato'
+  });
+});

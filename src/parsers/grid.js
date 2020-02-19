@@ -1,4 +1,4 @@
-import { system } from '../core'
+import { system } from '../core';
 
 const defaultScale = [0, 4, 8, 16, 32, 64, 128, 256, 512];
 
@@ -26,6 +26,6 @@ export const grid = system({
   gridTemplateColumns: true,
   gridTemplateRows: true,
   gridTemplateAreas: true,
-  gridArea: true,
-})
-export default grid
+  gridArea: true
+});
+export default grid;

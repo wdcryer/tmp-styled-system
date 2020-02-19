@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import {
   space,
   color,
@@ -13,21 +13,21 @@ import {
   buttonStyle,
   textStyle,
   colorStyle
-} from './styled-system'
+} from './styled-system';
 
 export const propType = PropTypes.oneOfType([
   PropTypes.number,
   PropTypes.string,
   PropTypes.array,
-  PropTypes.object,
-])
+  PropTypes.object
+]);
 
 export const createPropTypes = props => {
   return props.reduce((acc, name) => {
     acc[name] = propType;
     return acc;
   }, {});
-}
+};
 
 export default {
   space: createPropTypes(space.propNames),
@@ -42,5 +42,5 @@ export default {
   shadow: createPropTypes(shadow.propNames),
   buttonStyle: createPropTypes(buttonStyle.propNames),
   textStyle: createPropTypes(textStyle.propNames),
-  colorStyle: createPropTypes(colorStyle.propNames),
-}
+  colorStyle: createPropTypes(colorStyle.propNames)
+};

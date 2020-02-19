@@ -1,59 +1,59 @@
-import { system, compose } from '../../core'
+import { system, compose } from '../../core';
 
 const theme = {
   colors: {
     primary: 'rebeccapurple',
-    secondary: 'papayawhip',
+    secondary: 'papayawhip'
   },
-  fontSize: [0, 4, 8, 16],
-}
+  fontSize: [0, 4, 8, 16]
+};
 
 const parser = system({
   color: {
     property: 'color',
-    scale: 'colors',
+    scale: 'colors'
   },
-  fontSize: true,
-})
+  fontSize: true
+});
 
 test('uses default breakpoints', () => {
   const styles = parser({
     theme: theme,
     fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  })
+    color: ['primary', null, 'secondary']
+  });
   expect(styles).toEqual({
     color: 'rebeccapurple',
     fontSize: 4,
     '@media screen and (min-width: 40em)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media screen and (min-width: 52em)': {
       fontSize: 16,
-      color: 'papayawhip',
-    },
-  })
-})
+      color: 'papayawhip'
+    }
+  });
+});
 
 // Per default, we expect it to be impossible to override breakpoints
 test('does *not* use dynamically changed breakpoints', () => {
   const styles = parser({
     theme: { ...theme, breakpoints: ['11em', '22em', '33em'] },
     fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  })
+    color: ['primary', null, 'secondary']
+  });
   expect(styles).toEqual({
     color: 'rebeccapurple',
     fontSize: 4,
     '@media screen and (min-width: 40em)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media screen and (min-width: 52em)': {
       fontSize: 16,
-      color: 'papayawhip',
-    },
-  })
-})
+      color: 'papayawhip'
+    }
+  });
+});
 
 // With caching disabled, we expect it to be possible to change breakpoints
 test('uses dynamically changed breakpoints', () => {
@@ -61,61 +61,61 @@ test('uses dynamically changed breakpoints', () => {
     theme: {
       ...theme,
       breakpoints: ['11em', '22em', '33em'],
-      disableStyledSystemCache: true,
+      disableStyledSystemCache: true
     },
     fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  })
+    color: ['primary', null, 'secondary']
+  });
   expect(firstStyles).toEqual({
     color: 'rebeccapurple',
     fontSize: 4,
     '@media screen and (min-width: 11em)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media screen and (min-width: 22em)': {
       fontSize: 16,
-      color: 'papayawhip',
-    },
-  })
+      color: 'papayawhip'
+    }
+  });
 
   const secondStyles = parser({
     theme: {
       ...theme,
       breakpoints: ['9em', '8em', '7em'],
-      disableStyledSystemCache: true,
+      disableStyledSystemCache: true
     },
     fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  })
+    color: ['primary', null, 'secondary']
+  });
   expect(secondStyles).toEqual({
     color: 'rebeccapurple',
     fontSize: 4,
     '@media screen and (min-width: 9em)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media screen and (min-width: 8em)': {
       fontSize: 16,
-      color: 'papayawhip',
-    },
-  })
+      color: 'papayawhip'
+    }
+  });
 
   const thirdStyles = parser({
     theme: theme,
     fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  })
+    color: ['primary', null, 'secondary']
+  });
   expect(thirdStyles).toEqual({
     color: 'rebeccapurple',
     fontSize: 4,
     '@media screen and (min-width: 9em)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media screen and (min-width: 8em)': {
       fontSize: 16,
-      color: 'papayawhip',
-    },
-  })
-})
+      color: 'papayawhip'
+    }
+  });
+});
 
 test('uses custom media query breakpoints', () => {
   const styles = parser({
@@ -124,19 +124,19 @@ test('uses custom media query breakpoints', () => {
       fontSize: [0, 4, 8, 16],
       breakpoints: [
         '@media only screen and (pointer: fine)',
-        '@media only screen and (pointer: coarse)',
-      ],
+        '@media only screen and (pointer: coarse)'
+      ]
     },
-    fontSize: [1, 2, 3],
-  })
+    fontSize: [1, 2, 3]
+  });
 
   expect(styles).toEqual({
     fontSize: 4,
     '@media only screen and (pointer: fine)': {
-      fontSize: 8,
+      fontSize: 8
     },
     '@media only screen and (pointer: coarse)': {
-      fontSize: 16,
-    },
-  })
-})
+      fontSize: 16
+    }
+  });
+});

@@ -1,26 +1,26 @@
-import { pick, omit } from '../../props'
+import { pick, omit } from '../../props';
 
 const props = {
   id: 'hi',
   className: 'beep',
   p: 3,
   bg: 'tomato',
-  color: 'white',
-}
+  color: 'white'
+};
 
 test('omits styled-system props', () => {
-  const attr = omit(props)
+  const attr = omit(props);
   expect(attr).toEqual({
     id: 'hi',
-    className: 'beep',
-  })
-})
+    className: 'beep'
+  });
+});
 
 test('picks styled-system props', () => {
-  const sx = pick(props)
+  const sx = pick(props);
   expect(sx).toEqual({
     p: 3,
     bg: 'tomato',
-    color: 'white',
-  })
-})
+    color: 'white'
+  });
+});

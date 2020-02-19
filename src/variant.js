@@ -1,5 +1,5 @@
-import { get, createParser } from './core'
-import css from './css'
+import { get, createParser } from './core';
+import css from './css';
 
 export const variant = ({
   scale,
@@ -7,25 +7,23 @@ export const variant = ({
   // enables new api
   variants = {},
   // shim for v4 API
-  key,
+  key
 }) => {
-  let sx
+  let sx;
   if (Object.keys(variants).length) {
-    sx = (value, scale, props) => css(get(scale, value, null))(props.theme)
+    sx = (value, scale, props) => css(get(scale, value, null))(props.theme);
   } else {
-    sx = (value, scale) => get(scale, value, null)
+    sx = (value, scale) => get(scale, value, null);
   }
-  sx.scale = scale || key
-  sx.defaults = variants
-  const config = {
-    [prop]: sx,
-  }
-  const parser = createParser(config)
-  return parser
-}
+  sx.scale = scale || key;
+  sx.defaults = variants;
+  return createParser({
+    [prop]: sx
+  });
+};
 
-export default variant
+export default variant;
 
-export const buttonStyle = variant({ key: 'buttons' })
-export const textStyle = variant({ key: 'textStyles', prop: 'textStyle' })
-export const colorStyle = variant({ key: 'colorStyles', prop: 'colors' })
+export const buttonStyle = variant({ key: 'buttons' });
+export const textStyle = variant({ key: 'textStyles', prop: 'textStyle' });
+export const colorStyle = variant({ key: 'colorStyles', prop: 'colors' });

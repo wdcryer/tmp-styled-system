@@ -1,0 +1,475 @@
+"use strict";
+
+var _css = _interopRequireDefault(require("../../css"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var theme = {
+  colors: {
+    primary: 'tomato',
+    secondary: 'cyan'
+  },
+  fontSizes: [12, 14, 16, 24, 36],
+  fonts: {
+    monospace: 'Menlo, monospace'
+  },
+  lineHeights: {
+    body: 1.5
+  },
+  fontWeights: {
+    bold: 600
+  },
+  sizes: {
+    small: 4,
+    medium: 8,
+    large: 16,
+    sidebar: 320
+  },
+  buttons: {
+    primary: {
+      p: 3,
+      fontWeight: 'bold',
+      color: 'white',
+      bg: 'primary',
+      borderRadius: 2
+    }
+  },
+  text: {
+    caps: {
+      fontSize: [1, 2],
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase'
+    },
+    title: {
+      fontSize: [3, 4],
+      letterSpacing: ['-0.01em', '-0.02em']
+    }
+  },
+  borderWidths: {
+    thin: 1
+  },
+  borderStyles: {
+    thick: 'solid'
+  },
+  radii: {
+    small: 5
+  }
+};
+test('returns a function', function () {
+  var result = (0, _css["default"])();
+  expect(typeof result).toBe('function');
+});
+test('returns an object', function () {
+  var result = (0, _css["default"])()();
+  expect(typeof result).toBe('object');
+});
+test('returns styles', function () {
+  var result = (0, _css["default"])({
+    fontSize: 32,
+    color: 'blue',
+    borderRadius: 4
+  })();
+  expect(result).toEqual({
+    fontSize: 32,
+    color: 'blue',
+    borderRadius: 4
+  });
+});
+test('returns system props styles', function () {
+  var result = (0, _css["default"])({
+    color: 'primary',
+    fontSize: [2, 3, 4]
+  })({
+    theme: theme
+  });
+  expect(result).toEqual({
+    fontSize: 16,
+    '@media screen and (min-width: 40em)': {
+      fontSize: 24
+    },
+    '@media screen and (min-width: 52em)': {
+      fontSize: 36
+    },
+    color: 'tomato'
+  });
+});
+test('returns nested system props styles', function () {
+  var result = (0, _css["default"])({
+    color: 'primary',
+    '&:hover': {
+      color: 'secondary'
+    }
+  })({
+    theme: theme
+  });
+  expect(result).toEqual({
+    color: 'tomato',
+    '&:hover': {
+      color: 'cyan'
+    }
+  });
+});
+test('returns nested responsive styles', function () {
+  var result = (0, _css["default"])({
+    color: 'primary',
+    h1: {
+      py: [3, 4]
+    }
+  })({
+    theme: theme
+  });
+  expect(result).toEqual({
+    color: 'tomato',
+    h1: {
+      paddingTop: 16,
+      paddingBottom: 16,
+      '@media screen and (min-width: 40em)': {
+        paddingTop: 32,
+        paddingBottom: 32
+      }
+    }
+  });
+});
+test('handles all core styled system props', function () {
+  var result = (0, _css["default"])({
+    m: 0,
+    mb: 2,
+    mx: 'auto',
+    p: 3,
+    py: 4,
+    fontSize: 3,
+    fontWeight: 'bold',
+    color: 'primary',
+    bg: 'secondary',
+    fontFamily: 'monospace',
+    lineHeight: 'body'
+  })({
+    theme: theme
+  });
+  expect(result).toEqual({
+    margin: 0,
+    marginBottom: 8,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: 16,
+    paddingTop: 32,
+    paddingBottom: 32,
+    color: 'tomato',
+    backgroundColor: 'cyan',
+    fontFamily: 'Menlo, monospace',
+    fontSize: 24,
+    fontWeight: 600,
+    lineHeight: 1.5
+  });
+});
+test('works with the css prop', function () {
+  var result = (0, _css["default"])({
+    color: 'primary',
+    m: 0,
+    fontSize: 2
+  })(theme);
+  expect(result).toEqual({
+    color: 'tomato',
+    margin: 0,
+    fontSize: 16
+  });
+});
+test('works with functional arguments', function () {
+  var result = (0, _css["default"])(function (t) {
+    return {
+      color: t.colors.primary
+    };
+  })(theme);
+  expect(result).toEqual({
+    color: 'tomato'
+  });
+});
+test('supports functional values', function () {
+  var result = (0, _css["default"])({
+    color: function color(t) {
+      return t.colors.primary;
+    }
+  })(theme);
+  expect(result).toEqual({
+    color: 'tomato'
+  });
+});
+test('returns variants from theme', function () {
+  var result = (0, _css["default"])({
+    variant: 'buttons.primary'
+  })(theme);
+  expect(result).toEqual({
+    padding: 16,
+    fontWeight: 600,
+    color: 'white',
+    backgroundColor: 'tomato',
+    borderRadius: 2
+  });
+});
+test('handles variants with responsive values', function () {
+  var result = (0, _css["default"])({
+    variant: 'text.caps'
+  })(theme);
+  expect(result).toEqual({
+    fontSize: 14,
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase',
+    '@media screen and (min-width: 40em)': {
+      fontSize: 16
+    }
+  });
+});
+test('handles responsive variants', function () {
+  var result = (0, _css["default"])({
+    variant: 'text.title'
+  })(theme);
+  expect(result).toEqual({
+    fontSize: 24,
+    letterSpacing: '-0.01em',
+    '@media screen and (min-width: 40em)': {
+      fontSize: 36,
+      letterSpacing: '-0.02em'
+    }
+  });
+});
+test('handles negative margins from scale', function () {
+  var result = (0, _css["default"])({
+    mt: -3,
+    mx: -4
+  })(theme);
+  expect(result).toEqual({
+    marginTop: -16,
+    marginLeft: -32,
+    marginRight: -32
+  });
+});
+test('handles negative top, left, bottom, and right from scale', function () {
+  var result = (0, _css["default"])({
+    top: -1,
+    right: -4,
+    bottom: -3,
+    left: -2
+  })(theme);
+  expect(result).toEqual({
+    top: -4,
+    right: -32,
+    bottom: -16,
+    left: -8
+  });
+});
+test('skip breakpoints', function () {
+  var result = (0, _css["default"])({
+    width: ['100%',, '50%']
+  })(theme);
+  expect(result).toEqual({
+    width: '100%',
+    '@media screen and (min-width: 52em)': {
+      width: '50%'
+    }
+  });
+});
+test('padding shorthand does not collide with nested p selector', function () {
+  var result = (0, _css["default"])({
+    p: {
+      fontSize: 32,
+      color: 'tomato',
+      p: 2
+    },
+    padding: 32
+  })(theme);
+  expect(result).toEqual({
+    p: {
+      fontSize: 32,
+      color: 'tomato',
+      padding: 8
+    },
+    padding: 32
+  });
+});
+test('ignores array values longer than breakpoints', function () {
+  var result = (0, _css["default"])({
+    width: [32, 64, 128, 256, 512]
+  })({
+    breakpoints: ['32em', '40em']
+  });
+  expect(result).toEqual({
+    width: 32,
+    '@media screen and (min-width: 32em)': {
+      width: 64
+    },
+    '@media screen and (min-width: 40em)': {
+      width: 128
+    }
+  });
+});
+test('functional values can return responsive arrays', function () {
+  var result = (0, _css["default"])({
+    color: function color(t) {
+      return [t.colors.primary, t.colors.secondary];
+    }
+  })(theme);
+  expect(result).toEqual({
+    '@media screen and (min-width: 40em)': {
+      color: 'cyan'
+    },
+    color: 'tomato'
+  });
+});
+test('returns individual border styles', function () {
+  var result = (0, _css["default"])({
+    borderTopWidth: 'thin',
+    borderTopColor: 'primary',
+    borderTopStyle: 'thick',
+    borderTopLeftRadius: 'small',
+    borderTopRightRadius: 'small',
+    borderBottomWidth: 'thin',
+    borderBottomColor: 'primary',
+    borderBottomStyle: 'thick',
+    borderBottomLeftRadius: 'small',
+    borderBottomRightRadius: 'small',
+    borderRightWidth: 'thin',
+    borderRightColor: 'primary',
+    borderRightStyle: 'thick',
+    borderLeftWidth: 'thin',
+    borderLeftColor: 'primary',
+    borderLeftStyle: 'thick'
+  })(theme);
+  expect(result).toEqual({
+    borderTopColor: 'tomato',
+    borderTopWidth: 1,
+    borderTopStyle: 'solid',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomColor: 'tomato',
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderRightColor: 'tomato',
+    borderRightWidth: 1,
+    borderRightStyle: 'solid',
+    borderLeftColor: 'tomato',
+    borderLeftWidth: 1,
+    borderLeftStyle: 'solid'
+  });
+});
+test('flexBasis uses theme.sizes', function () {
+  var style = (0, _css["default"])({
+    flexBasis: 'sidebar'
+  })(theme);
+  expect(style).toEqual({
+    flexBasis: 320
+  });
+});
+test('fill and stroke use theme.colors', function () {
+  var style = (0, _css["default"])({
+    fill: 'primary',
+    stroke: 'secondary'
+  })(theme);
+  expect(style).toEqual({
+    fill: 'tomato',
+    stroke: 'cyan'
+  });
+});
+test('multiples are transformed', function () {
+  var style = (0, _css["default"])({
+    marginX: 2,
+    marginY: 2,
+    paddingX: 2,
+    paddingY: 2,
+    size: 'large'
+  })(theme);
+  expect(style).toEqual({
+    marginLeft: 8,
+    marginRight: 8,
+    marginTop: 8,
+    marginBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    width: 16,
+    height: 16
+  });
+});
+test('returns outline color from theme', function () {
+  var result = (0, _css["default"])({
+    outlineColor: 'primary'
+  })(theme);
+  expect(result).toEqual({
+    outlineColor: 'tomato'
+  });
+});
+test('custom media query breakpoints object', function () {
+  var result = (0, _css["default"])({
+    fontSize: {
+      _: 16,
+      'break-0': 32,
+      'break-1': 64
+    },
+    lineHeight: {
+      /* test no default */
+      'break-1': 128
+    },
+    h1: {
+      fontSize: {
+        _: 500,
+        'break-1': 750,
+        'break-2': 1000
+      }
+    }
+  })({
+    breakpoints: {
+      'break-0': '@media screen and (min-width: 40em)',
+      'break-1': '@media screen and (min-width: 52em)',
+      'break-2': '@media screen and (min-width: 90em)'
+    }
+  });
+  expect(result).toEqual({
+    fontSize: 16,
+    '@media screen and (min-width: 40em)': {
+      fontSize: 32
+    },
+    '@media screen and (min-width: 52em)': {
+      fontSize: 64,
+      lineHeight: 128
+    },
+    h1: {
+      fontSize: 500,
+      '@media screen and (min-width: 52em)': {
+        fontSize: 750
+      },
+      '@media screen and (min-width: 90em)': {
+        fontSize: 1000
+      }
+    }
+  });
+});
+test('custom media query breakpoints array', function () {
+  var result = (0, _css["default"])({
+    fontSize: [16, 32, 64],
+    lineHeight: [32, null, 128],
+    h1: {
+      lineHeight: [256, 512, null]
+    }
+  })({
+    breakpoints: ['@media screen and (min-width: 40em)', '@media screen and (min-width: 52em)']
+  });
+  expect(result).toEqual({
+    fontSize: 16,
+    lineHeight: 32,
+    '@media screen and (min-width: 40em)': {
+      fontSize: 32
+    },
+    '@media screen and (min-width: 52em)': {
+      fontSize: 64,
+      lineHeight: 128
+    },
+    h1: {
+      lineHeight: 256,
+      '@media screen and (min-width: 40em)': {
+        lineHeight: 512
+      }
+    }
+  });
+});
