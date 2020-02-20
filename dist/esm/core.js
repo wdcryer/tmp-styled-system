@@ -137,17 +137,37 @@ var parseResponsiveObject = function parseResponsiveObject(breakpoints, sx, scal
   var styles = {};
 
   for (var key in raw) {
-    var breakpoint = breakpoints[key];
     var value = raw[key];
-    var style = sx(value, scale, _props);
+    var style = sx(value, scale, _props); // MATCH WILDCARD
+
+    if (key.endsWith('*')) {
+      // e.g. "tablet-*" becomes "tablet-"
+      var subbpkey = key.substr(0, key.length - 1);
+
+      for (var k in breakpoints) {
+        var media = breakpoints[k];
+
+        if (k.startsWith(subbpkey)) {
+          var _assign2;
+
+          // Apply the breakpoint value to the result['@media...'] object
+          assign(styles, (_assign2 = {}, _assign2[media] = assign({}, styles[media], style), _assign2));
+        }
+      }
+
+      continue;
+    }
+
+    var breakpoint = breakpoints[key];
 
     if (!breakpoint) {
       assign(styles, style);
     } else {
-      var _assign2;
+      var _assign3;
 
-      var media = createMediaQuery(breakpoint);
-      assign(styles, (_assign2 = {}, _assign2[media] = assign({}, styles[media], style), _assign2));
+      var _media = createMediaQuery(breakpoint);
+
+      assign(styles, (_assign3 = {}, _assign3[_media] = assign({}, styles[_media], style), _assign3));
     }
   }
 

@@ -195,6 +195,25 @@ var responsive = function responsive(styles) {
           var isBreakpointObj = false;
 
           for (var bpkey in value) {
+            // MATCH WILDCARD
+            if (bpkey.endsWith('*')) {
+              // e.g. "tablet-*" becomes "tablet-"
+              var subbpkey = bpkey.substr(0, bpkey.length - 1);
+
+              for (var k in breakpoints) {
+                var _media = breakpoints[k];
+
+                if (k.startsWith(subbpkey)) {
+                  isBreakpointObj = true; // Apply the breakpoint value to the result['@media...'] object
+
+                  next[_media] = next[_media] || {};
+                  next[_media][key] = value[bpkey];
+                }
+              }
+
+              continue;
+            }
+
             var media = breakpoints[bpkey]; // Check if key is a breakpoint key
 
             if (!media) {
@@ -219,16 +238,16 @@ var responsive = function responsive(styles) {
       var length = value.slice(0, mediaQueries.length).length;
 
       for (var i = 0; i < length; i++) {
-        var _media = mediaQueries[i];
+        var _media2 = mediaQueries[i];
         if (value[i] == null) continue;
 
-        if (!_media) {
+        if (!_media2) {
           next[key] = value[i];
           continue;
         }
 
-        next[_media] = next[_media] || {};
-        next[_media][key] = value[i];
+        next[_media2] = next[_media2] || {};
+        next[_media2][key] = value[i];
       }
     }
 

@@ -395,6 +395,20 @@ test('returns outline color from theme', function () {
     outlineColor: 'tomato'
   });
 });
+test('supports custom media query in css function args', function () {
+  var result = css({
+    p: 6,
+    '@media print': {
+      p: 8
+    }
+  })(theme);
+  expect(result).toEqual({
+    padding: 128,
+    '@media print': {
+      padding: 512
+    }
+  });
+});
 test('custom media query breakpoints object', function () {
   var result = css({
     fontSize: {

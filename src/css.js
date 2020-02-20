@@ -198,6 +198,23 @@ export const responsive = styles => theme => {
         let isBreakpointObj = false;
 
         for (let bpkey in value) {
+          // MATCH WILDCARD
+          if (bpkey.endsWith('*')) {
+            // e.g. "tablet-*" becomes "tablet-"
+            const subbpkey = bpkey.substr(0, bpkey.length - 1);
+
+            for (const k in breakpoints) {
+              const media = breakpoints[k];
+              if (k.startsWith(subbpkey)) {
+                isBreakpointObj = true;
+                // Apply the breakpoint value to the result['@media...'] object
+                next[media] = next[media] || {};
+                next[media][key] = value[bpkey];
+              }
+            }
+            continue;
+          }
+
           let media = breakpoints[bpkey];
 
           // Check if key is a breakpoint key

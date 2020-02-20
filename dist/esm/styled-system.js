@@ -1,5 +1,4 @@
-import { createStyleFunction, createParser } from './core'; // v4 api shims
-
+// v4 api shims
 import layout from './parsers/layout';
 import color from './parsers/color';
 import typography from './parsers/typography';

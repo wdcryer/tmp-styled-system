@@ -1,15 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.left = exports.bottom = exports.right = exports.top = exports.zIndex = exports.backgroundRepeat = exports.backgroundPosition = exports.backgroundSize = exports.backgroundImage = exports.borderRadius = exports.borderLeft = exports.borderBottom = exports.borderRight = exports.borderTop = exports.borderColor = exports.borderStyle = exports.borderWidth = exports.gridArea = exports.gridTemplateAreas = exports.gridTemplateRows = exports.gridTemplateColumns = exports.gridAutoRows = exports.gridAutoColumns = exports.gridAutoFlow = exports.gridRow = exports.gridColumn = exports.gridRowGap = exports.gridColumnGap = exports.gridGap = exports.order = exports.alignSelf = exports.justifySelf = exports.flexBasis = exports.flexShrink = exports.flexGrow = exports.flex = exports.flexDirection = exports.flexWrap = exports.justifyContent = exports.justifyItems = exports.alignContent = exports.alignItems = exports.letterSpacing = exports.fontStyle = exports.textAlign = exports.lineHeight = exports.fontWeight = exports.fontFamily = exports.fontSize = exports.opacity = exports.overflowY = exports.overflowX = exports.overflow = exports.display = exports.verticalAlign = exports.size = exports.maxHeight = exports.maxWidth = exports.minHeight = exports.minWidth = exports.height = exports.width = exports.propType = exports.colorStyle = exports.textStyle = exports.buttonStyle = exports.variant = exports.borders = exports.propTypes = exports.css = exports.textShadow = exports.boxShadow = exports.shadow = exports.space = exports.padding = exports.margin = exports.system = exports.compose = exports.get = void 0;
-
-var _core = require("./core");
-
-exports.createStyleFunction = _core.createStyleFunction;
-exports.createParser = _core.createParser;
-exports.get = _core.get;
-exports.compose = _core.compose;
-exports.system = _core.system;
+exports.left = exports.bottom = exports.right = exports.top = exports.zIndex = exports.backgroundRepeat = exports.backgroundPosition = exports.backgroundSize = exports.backgroundImage = exports.borderRadius = exports.borderLeft = exports.borderBottom = exports.borderRight = exports.borderTop = exports.borderColor = exports.borderStyle = exports.borderWidth = exports.gridArea = exports.gridTemplateAreas = exports.gridTemplateRows = exports.gridTemplateColumns = exports.gridAutoRows = exports.gridAutoColumns = exports.gridAutoFlow = exports.gridRow = exports.gridColumn = exports.gridRowGap = exports.gridColumnGap = exports.gridGap = exports.order = exports.alignSelf = exports.justifySelf = exports.flexBasis = exports.flexShrink = exports.flexGrow = exports.flex = exports.flexDirection = exports.flexWrap = exports.justifyContent = exports.justifyItems = exports.alignContent = exports.alignItems = exports.letterSpacing = exports.fontStyle = exports.textAlign = exports.lineHeight = exports.fontWeight = exports.fontFamily = exports.fontSize = exports.opacity = exports.overflowY = exports.overflowX = exports.overflow = exports.display = exports.verticalAlign = exports.size = exports.maxHeight = exports.maxWidth = exports.minHeight = exports.minWidth = exports.height = exports.width = exports.propType = exports.colorStyle = exports.textStyle = exports.buttonStyle = exports.variant = exports.borders = exports.propTypes = exports.css = exports.textShadow = exports.boxShadow = exports.shadow = exports.space = exports.padding = exports.margin = exports.system = exports.compose = exports.createStyleFunction = exports.createParser = exports.get = void 0;
 
 var _layout = _interopRequireWildcard(require("./parsers/layout"));
 
@@ -43,6 +35,14 @@ exports.background = _background.background;
 var _position = _interopRequireWildcard(require("./parsers/position"));
 
 exports.position = _position.position;
+
+var _core = require("./core");
+
+exports.get = _core.get;
+exports.createParser = _core.createParser;
+exports.createStyleFunction = _core.createStyleFunction;
+exports.compose = _core.compose;
+exports.system = _core.system;
 
 var _space = require("./parsers/space");
 

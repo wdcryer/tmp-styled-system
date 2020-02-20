@@ -66,6 +66,7 @@ export const createParser = config => {
         cache.breakpoints =
           (!isCacheDisabled && cache.breakpoints) ||
           get(props.theme, 'breakpoints', defaults.breakpoints);
+
         if (Array.isArray(raw)) {
           cache.media = (!isCacheDisabled && cache.media) || [
             null,
@@ -129,10 +130,29 @@ const parseResponsiveStyle = (mediaQueries, sx, scale, raw, _props) => {
 
 const parseResponsiveObject = (breakpoints, sx, scale, raw, _props) => {
   let styles = {};
+
   for (let key in raw) {
-    const breakpoint = breakpoints[key];
     const value = raw[key];
     const style = sx(value, scale, _props);
+    // MATCH WILDCARD
+    if (key.endsWith('*')) {
+      // e.g. "tablet-*" becomes "tablet-"
+      const subbpkey = key.substr(0, key.length - 1);
+
+      for (const k in breakpoints) {
+        const media = breakpoints[k];
+        if (k.startsWith(subbpkey)) {
+          // Apply the breakpoint value to the result['@media...'] object
+          assign(styles, {
+            [media]: assign({}, styles[media], style)
+          });
+        }
+      }
+      continue;
+    }
+
+    const breakpoint = breakpoints[key];
+
     if (!breakpoint) {
       assign(styles, style);
     } else {
@@ -142,6 +162,7 @@ const parseResponsiveObject = (breakpoints, sx, scale, raw, _props) => {
       });
     }
   }
+
   return styles;
 };
 

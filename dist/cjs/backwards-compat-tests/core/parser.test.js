@@ -115,15 +115,30 @@ test('uses dynamically changed breakpoints', function () {
   });
 });
 test('uses custom media query breakpoints', function () {
+  // Breakpoints is an array
   var styles = parser({
-    theme: {
+    theme: _extends({}, theme, {
       disableStyledSystemCache: true,
-      fontSize: [0, 4, 8, 16],
       breakpoints: ['@media only screen and (pointer: fine)', '@media only screen and (pointer: coarse)']
-    },
+    }),
     fontSize: [1, 2, 3]
+  }); // Breakpoints is a key-value mapping
+
+  var styles2 = parser({
+    theme: _extends({}, theme, {
+      disableStyledSystemCache: true,
+      breakpoints: {
+        'break-0': '@media only screen and (pointer: fine)',
+        'break-1': '@media only screen and (pointer: coarse)'
+      }
+    }),
+    fontSize: {
+      _: 1,
+      'break-0': 2,
+      'break-1': 3
+    }
   });
-  expect(styles).toEqual({
+  var expected = {
     fontSize: 4,
     '@media only screen and (pointer: fine)': {
       fontSize: 8
@@ -131,5 +146,7 @@ test('uses custom media query breakpoints', function () {
     '@media only screen and (pointer: coarse)': {
       fontSize: 16
     }
-  });
+  };
+  expect(styles).toEqual(expected);
+  expect(styles2).toEqual(expected);
 });
