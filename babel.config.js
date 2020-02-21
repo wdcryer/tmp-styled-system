@@ -3,7 +3,7 @@ module.exports = {
   env: {
     esm: {
       presets: [
-        ['@babel/env', { loose: true, modules: false }],
+        ['@babel/preset-env', { loose: true, modules: false }],
         '@babel/preset-react'
       ]
     }
