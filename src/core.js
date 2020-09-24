@@ -79,10 +79,15 @@ export const createParser = config => {
           continue;
         }
         if (raw !== null) {
-          styles = merge(
-            styles,
-            parseResponsiveObject(cache.breakpoints, sx, scale, raw, props)
-          );
+          // We have a style class
+          if (raw.valueOf() !== raw) {
+            styles = merge(styles, sx(raw, scale, props));
+          } else {
+            styles = merge(
+              styles,
+              parseResponsiveObject(cache.breakpoints, sx, scale, raw, props)
+            );
+          }
           shouldSort = true;
         }
         continue;
