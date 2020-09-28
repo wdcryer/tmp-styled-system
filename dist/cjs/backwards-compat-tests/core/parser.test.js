@@ -2,12 +2,17 @@
 
 var _core = require("../../core");
 
+var _RosettaColor = _interopRequireDefault(require("../../testUtilities/RosettaColor"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var theme = {
   colors: {
     primary: 'rebeccapurple',
-    secondary: 'papayawhip'
+    secondary: 'papayawhip',
+    tertiary: new _RosettaColor["default"]()
   },
   fontSize: [0, 4, 8, 16]
 };
@@ -149,4 +154,31 @@ test('uses custom media query breakpoints', function () {
   };
   expect(styles).toEqual(expected);
   expect(styles2).toEqual(expected);
+});
+test('supports rosetta colors class', function () {
+  var styles1 = parser({
+    theme: theme,
+    color: 'tertiary'
+  });
+  var expected1 = {
+    color: new _RosettaColor["default"]()
+  };
+  expect(styles1).toEqual(expected1);
+  expect(styles1.color.valueOf()).toEqual('red');
+  var styles2 = parser({
+    theme: theme,
+    color: 'tertiary.100'
+  });
+  var expected2 = {
+    color: 'orange'
+  };
+  expect(styles2).toEqual(expected2);
+  var styles3 = parser({
+    theme: theme,
+    color: 'tertiary.200'
+  });
+  var expected3 = {
+    color: 'yellow'
+  };
+  expect(styles3).toEqual(expected3);
 });

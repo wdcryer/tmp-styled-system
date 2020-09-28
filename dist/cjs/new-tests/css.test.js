@@ -2,7 +2,21 @@
 
 var _css = _interopRequireDefault(require("../css"));
 
+var _RosettaColor = _interopRequireDefault(require("../testUtilities/RosettaColor"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteralLoose(["\n  token         | value\n  ", "    | ", "\n  ", "      | ", "\n  ", "  | ", "\n  ", " | ", "\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteralLoose(strings, raw) { if (!raw) { raw = strings.slice(0); } strings.raw = raw; return strings; }
 
 var theme = {
   breakpoints: {
@@ -42,5 +56,24 @@ test('match breakpoints wildcard', function () {
     '@media tablet-100': {
       fontSize: 64
     }
+  });
+});
+test.each(_templateObject(), 'green', 'green', 'red', 'red', 'red.100', 'orange', 'blue.100', 'blue')('converts $token to $value', function (_ref) {
+  var token = _ref.token,
+      value = _ref.value;
+  var colorTheme = {
+    colors: {
+      green: 'green',
+      red: new _RosettaColor["default"](),
+      blue: {
+        '100': 'blue'
+      }
+    }
+  };
+  var resolved = (0, _css["default"])({
+    color: token
+  })(colorTheme);
+  expect(resolved).toEqual({
+    color: value
   });
 });
