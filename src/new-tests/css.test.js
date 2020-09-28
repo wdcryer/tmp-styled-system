@@ -1,4 +1,5 @@
 import css from '../css';
+import RosettaColor from '../testUtilities/RosettaColor';
 
 const theme = {
   breakpoints: {
@@ -42,5 +43,31 @@ test('match breakpoints wildcard', () => {
     '@media tablet-100': {
       fontSize: 64
     }
+  });
+});
+
+test.each`
+  token         | value
+  ${'green'}    | ${'green'}
+  ${'red'}      | ${'red'}
+  ${'red.100'}  | ${'orange'}
+  ${'blue.100'} | ${'blue'}
+`('converts $token to $value', ({ token, value }) => {
+  const colorTheme = {
+    colors: {
+      green: 'green',
+      red: new RosettaColor(),
+      blue: {
+        '100': 'blue'
+      }
+    }
+  };
+
+  const resolved = css({
+    color: token
+  })(colorTheme);
+
+  expect(resolved).toEqual({
+    color: value
   });
 });
