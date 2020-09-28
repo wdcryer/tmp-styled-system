@@ -2,7 +2,7 @@
   "name": "tmp-styled-system",
   "main": "dist/cjs/styled-system.js",
   "module": "dist/esm/styled-system.js",
-  "version": "1.1.0",
+  "version": "6.2.0",
   "description": "",
   "scripts": {
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
