@@ -1,9 +1,23 @@
-import { system, compose } from '../../core';
+import { system } from '../../core';
+
+class RosettaColor extends String {
+  constructor(...args) {
+    super(args);
+
+    this['100'] = 'orange';
+    this['200'] = 'yellow';
+  }
+
+  valueOf() {
+    return 'red';
+  }
+}
 
 const theme = {
   colors: {
     primary: 'rebeccapurple',
-    secondary: 'papayawhip'
+    secondary: 'papayawhip',
+    tertiary: new RosettaColor()
   },
   fontSize: [0, 4, 8, 16]
 };
@@ -159,4 +173,40 @@ test('uses custom media query breakpoints', () => {
   };
   expect(styles).toEqual(expected);
   expect(styles2).toEqual(expected);
+});
+
+test('supports rosetta colors class', () => {
+  const styles1 = parser({
+    theme: theme,
+    color: 'tertiary'
+  });
+
+  const expected1 = {
+    color: new RosettaColor()
+  };
+
+  expect(styles1).toEqual(expected1);
+  expect(styles1.color.valueOf()).toEqual('red');
+
+  const styles2 = parser({
+    theme: theme,
+    color: 'tertiary.100'
+  });
+
+  const expected2 = {
+    color: 'orange'
+  };
+
+  expect(styles2).toEqual(expected2);
+
+  const styles3 = parser({
+    theme: theme,
+    color: 'tertiary.200'
+  });
+
+  const expected3 = {
+    color: 'yellow'
+  };
+
+  expect(styles3).toEqual(expected3);
 });
