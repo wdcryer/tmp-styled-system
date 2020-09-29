@@ -1,8 +1,9 @@
 {
   "name": "tmp-styled-system",
+  "files": ["dist"],
   "main": "dist/cjs/styled-system.js",
   "module": "dist/esm/styled-system.js",
-  "version": "6.2.2",
+  "version": "6.2.3",
   "description": "",
   "scripts": {
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
