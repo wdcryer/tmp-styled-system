@@ -1,17 +1,5 @@
 import { system } from '../../core';
-
-class RosettaColor extends String {
-  constructor(...args) {
-    super(args);
-
-    this['100'] = 'orange';
-    this['200'] = 'yellow';
-  }
-
-  valueOf() {
-    return 'red';
-  }
-}
+import RosettaColor from '../../testUtilities/RosettaColor';
 
 const theme = {
   colors: {

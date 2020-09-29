@@ -277,7 +277,15 @@ export const css = args => (props = {}) => {
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
     const transform = get(transforms, prop, get);
-    const value = transform(scale, val, val);
+    
+    /**
+     * In order to be backwards compatible with old tokens, 
+     * we need to call valueOf() on values which use the 
+     * RosettaColor class.
+     **/ 
+
+    const tempValue = transform(scale, val, val);
+    const value = tempValue !== undefined ? tempValue.valueOf() : tempValue;
 
     if (multiples[prop]) {
       const dirs = multiples[prop];
